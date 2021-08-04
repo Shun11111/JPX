@@ -20,8 +20,7 @@ class ScoringService(object):
         # 価格情報読み込み、インデックス作成
         df_price = pd.read_csv(inputs["stock_price"]).set_index("EndOfDayQuote Date") # 日付型に変換
         df_price.index = pd.to_datetime(df_price.index, format="%Y-%m-%d")
-        # 特徴量の生成に必要な日数をバッファとして設定 
-        
+        # 特徴量の生成に必要な日数をバッファとして設定  
         n = 180
         # データ絞り込み日付設定
         data_start_dt = start_dt - pd.offsets.BDay(n) # 日付で絞り込み
@@ -60,8 +59,6 @@ class ScoringService(object):
         # 長期トレンドに対する短期トレンドの上昇率を算出
         df_feature_ratio = df_feature_20_ / df_feature_120
 
-
-
         # 作成した指標を、もとの（チュートリアルの）プログラムに組み込む
         df_work = df_feature_ratio 
         
@@ -91,7 +88,6 @@ class ScoringService(object):
             "trend": {"asc": False},
         # long_short_ratio戦略 （長期トレンド・短期トレンドの比率を活用）
             "long_short_ratio": {"asc": False},
-        
         }
         
         # 戦略に応じたポートフォリオを保存します 
